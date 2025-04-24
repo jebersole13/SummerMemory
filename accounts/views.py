@@ -1,3 +1,64 @@
-from django.shortcuts import render
+import time
+import uuid
+from django.shortcuts import render, redirect
+from django.contrib.auth import get_user_model, login
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_str
+from django.core.mail import EmailMessage
+from django.contrib import messages
+from django.urls import reverse
 
-# Create your views here.
+from .forms import RegistrationForm
+from .tokens import account_activation_token
+
+User = get_user_model()
+
+def register(request):
+    if request.method == "POST":
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            token = account_activation_token.make_token(user)
+            mail_subject = "Activate your account at Summer Memory"
+            message = render_to_string("registration/account_activation_email.html",{
+                "user":user,
+                "domain":current_site.domain,
+                "uid": uid,
+                "token": token,
+            })
+            email = EmailMessage(
+                mail_subject,
+                message,
+                'memorysummer345@gmail.com',
+                to=[form.cleaned_data["email"]],
+                headers={'X-Entity-Ref-ID': str(uuid.uuid4())}
+            )
+            email.send(fail_silently=False)
+            time.sleep(3)
+            messages.success(request,"Registration successful! Check your email to activate your account.")
+            return redirect("index.html")
+        else:
+            form = RegistrationForm()
+        return render(request, "registration/register.html", {"form":form})
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError,ValueError,OverflowError,User.DoesNotExist):
+        user = None
+    if user and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        messages.success(request, "Your account is now activated!")
+        return redirect(reverse("index.html"))
+    else:
+        messages.error(request, "Activation link is invalid or expired.")
+        return redirect("registration/register.html")
