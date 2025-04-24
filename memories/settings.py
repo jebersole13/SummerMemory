@@ -31,7 +31,9 @@ NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 # Application definition
 
-INSTALLED_APPS = ['journal',
+INSTALLED_APPS = [
+    'accounts',
+    'journal',
                   'tailwind',
                   'theme',
                    'django_browser_reload',
