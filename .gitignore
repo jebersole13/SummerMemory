@@ -1,0 +1,69 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment files
+venv/
+.venv/
+env/
+ENV/
+
+# Django secret key & local settings
+*.env
+.env/
+.env.local
+secrets.py
+/local_settings.py
+/settings/local.py
+
+# Database files
+*.sqlite3
+*.db
+*.dump
+
+# Logs and runtime data
+*.log
+logs/
+.pytest_cache/
+
+# Static & media files (if not versioned)
+/staticfiles/
+/mediafiles/
+
+# IDE & editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS files
+.DS_Store
+
+# Python packaging / build artifacts
+/dist/
+/build/
+*.egg-info/
+*.egg
+*.manifest
+*.spec
+
+# Coverage reports
+.coverage
+htmlcov/
+
+# PyCharm
+.idea/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# pytest
+.pytest_cache/
+
+# Celery
+celerybeat-schedule.*
+celerybeat.pid
+
+# Node.js (if using frontend tools)
+node_modules/
