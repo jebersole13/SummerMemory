@@ -1,19 +1,51 @@
 {% load static tailwind_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+ 	<head>
     <title>Summer Memory</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		{% tailwind_css %}
 	</head>
-{% block content %}
-	
 
-	
+<body class="flex flex-col min-h-screen leading-normal tracking-normal">
+    <div class="flex h-12 items-center space-x-11 bg-black text-white">   <nav class="w-full flex justify-between "> 
 
-	
-	{% endblock content %}
-	
+        <a href="{% url 'journal:index' %}" class="" >Summer Memory</a> 
+<a href="{% url 'journal:topics' %}" class="">Memories</a>                 <p>
+<div >
+{% if user.is_authenticated %}
+<p class="font-black" >Hello {{ user.username }}  </p>
+{% else %}
+<a href="{% url 'accounts:register' %}" class="font-bold text-lg text-blue-400" >Registration</a>
+    <a href="{% url 'accounts:login' %}" class="font-bold text-lg"> Login In </a>
+{% endif %}
+{% if user.is_authenticated %}
+    <hr/>
+    <form action="{% url 'accounts:logout' %}" method="post">
+        {% csrf_token %} 
+    <button type="submit" class=" bg-amber-50 text-blue-200 rounded-lg">Log out</button>
+    </form>
+{% endif %}
+</p>
+</div>
+    </nav> </div>
+
+   <main class="flex-grow"> 
+    <p>New and improved</p>
+
+      {% block content %}
+    {% endblock content %}
+
+   </main>
+
+
+<footer class="bg-blue-50 w-full h-10 "> <p class=" font-extrabold">Copyright</p>
+
+</footer>
+</body>	  
+  
+  
 </html>
