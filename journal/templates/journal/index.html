@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+ 
+<body class="flex flex-col min-h-screen leading-normal tracking-normal">
+    <div class="flex h-12 items-center space-x-11 bg-black text-white">   <nav class="w-full flex justify-between "> 
+
+        <a href="{% url 'journal:index' %}" class="" >Summer Memory</a> 
+<a href="{% url 'journal:topics' %}" class="">Memories</a>                 <p>
+<div >
+{% if user.is_authenticated %}
+<p class="font-black" >Hello {{ user.username }}  </p>
+{% else %}
+<a href="{% url 'accounts:register' %}" class="font-bold text-lg" >Registration</a>
+    <a href="{% url 'accounts:login' %}" class="font-bold text-lg"> Login In </a>
+{% endif %}
+{% if user.is_authenticated %}
+    <hr/>
+    <form action="{% url 'accounts:logout' %}" method="post">
+        {% csrf_token %} 
+    <button type="submit" class=" bg-amber-50 text-blue-200 rounded-lg">Log out</button>
+    </form>
+{% endif %}
+</p>
+</div>
+    </nav> </div>
+
+   <main class="flex-grow"> 
+    <p>New and improved</p>
+
+    
+   </main>
+   <footer class="bg-blue-50 w-full h-10 "> <p class=" font-extrabold">Copyright</p>
+
+</footer>
+
+</body>
+
+
+{% endblock content %}
