@@ -7,6 +7,6 @@
 <form action="{% url 'journal:new_entry' topic.id %}" method='post'>
     {% csrf_token %}
     {{ form.as_div }}
-    <button name="submit" class="border-4" >Add entry</button>
+    <button name="submit" class="bg-blue-600 text-white rounded" >Add entry</button>
 </form>
 {% endblock content %}
