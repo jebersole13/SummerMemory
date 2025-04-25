@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
+
 {% block content %}
-<p> <a href="{% url 'journal:topic' topic.id %}">{{ topic }}</a> </p>
-<p>Edit Entry:</p>
-<form action="{% url 'journal:edit_entry' entry.id %}" method='post'>
+<p><a href="{% url 'journal:topic' topic.id %}" class="border-8 bg-cyan-300">{{ topic }}</a></p>
+<p>Add new entry:</p>
+<form action="{% url 'journal:new_entry' topic.id %}" method='post'>
     {% csrf_token %}
     {{ form.as_div }}
-    <button class="bg-blue-300 border-2 font-bold rounded-3xl " name="submit" >Save Changes</button>
+    <button name="submit" class="border-4" >Add entry</button>
 </form>
 {% endblock content %}

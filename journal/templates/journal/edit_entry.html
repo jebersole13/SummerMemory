@@ -3,7 +3,7 @@
 {% block content %}
 <p> <a href="{% url 'journal:topic' topic.id %}">{{ topic }}</a> </p>
 <p>Edit Entry:</p>
-<form action="{% url 'journal:edit_entry' entry.id %}" method='post'>
+<form action="{% url 'journal:edit_entry' entry.id %}" method="post">
     {% csrf_token %}
     {{ form.as_div }}
     <button class="bg-blue-300 border-2 font-bold rounded-3xl " name="submit" >Save Changes</button>
