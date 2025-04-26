@@ -51,7 +51,7 @@ def register(request):
 
             messages.success(request,
                 "Registration successful! Check your email to activate your account.")
-            return redirect("journal:index")
+            return redirect("journal:topics")
     else:
         form = RegistrationForm()
 
@@ -69,7 +69,7 @@ def activate(request, uidb64, token):
         user.save()
         login(request, user)
         messages.success(request, "Your account is now activated!")
-        return redirect(reverse("learning_logs:index"))
+        return redirect(reverse("journal:topics"))
     else:
         messages.error(request, "Activation link is invalid or expired.")
         return redirect("registration/register.html")
