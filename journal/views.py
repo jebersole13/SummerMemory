@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from .models import Topic, Entry
@@ -28,7 +28,7 @@ def topic(request, topic_id):
         request (_type_): _description_
         topic_id (_type_): _description_
     """
-    topic = Topic.objects.get(id=topic_id)
+    topic = get_object_or_404(Topic,id=topic_id)
     if topic.owner != request.user:
         raise  Http404
     entries = topic.entry_set.order_by('-date_added')
@@ -54,6 +54,7 @@ def new_topic(request):
             return redirect('journal:topics')
     context = {'form':form}
     return render(request, 'journal/new_topic.html', context)
+
 @login_required
 def new_entry(request, topic_id):
     """_summary_
@@ -62,7 +63,10 @@ def new_entry(request, topic_id):
         request (_type_): _description_
         topic_id (_type_): _description_
     """
-    topic = Topic.objects.get(id=topic_id)
+    topic = get_object_or_404(Topic,id=topic_id)
+    if topic.owner != request.user:
+        raise Http404
+    
     if request.method != 'POST':
         form= EntryForm()
     else:
@@ -74,15 +78,11 @@ def new_entry(request, topic_id):
             return redirect('journal:topic', topic_id=topic_id)
     context = {'topic':topic, 'form': form}
     return render(request, 'journal/new_entry.html', context)
+
 @login_required
 def edit_entry(request, entry_id):
-    """_summary_
-
-    Args:
-        request (_type_): _description_
-        entry_id (_type_): _description_
-    """
-    entry = Entry.objects.get(id=entry_id)
+ 
+    entry = get_object_or_404(Entry,id=entry_id)
     topic = entry.topic
     if topic.owner !=request.user:
         raise Http404
@@ -95,3 +95,27 @@ def edit_entry(request, entry_id):
             return redirect('journal:topic', topic_id=topic.id)
     context ={'entry':entry, 'topic':topic, 'form':form}
     return render(request, 'journal/edit_entry.html', context)
+
+@login_required
+def delete_topic(request,topic_id):
+    topic = get_object_or_404(Topic, id=topic_id)
+    if topic.owner != request.user:
+        raise Http404
+        
+    if request.method == 'POST':
+        topic.delete()
+        return redirect('journal:topics')
+    return render(request,'journal:delete_topic.html', {'topic':topic,  'warning': f"You're about to permanently delete topic from {topic.date_added}"})
+
+@login_required
+def delete_entry(request, entry_id):
+    entry = get_object_or_404(Entry, id=entry_id)
+    topic = entry.topic
+    
+    if topic.owner != request.user:
+        raise Http404
+    
+    if request.method == 'POST':
+        entry.delete()
+        return redirect('journal:topic', topic_id=topic.id)
+    return render(request, 'journal:delete_entry.html', {'entry':entry, 'topic':topic,   'warning': f"You're about to permanently delete entry from {entry.date_added}"})

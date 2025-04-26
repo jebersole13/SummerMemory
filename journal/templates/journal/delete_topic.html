@@ -1,0 +1,10 @@
+{% extends "/base.html" %}
+{% block content %}
+  <h2>Are you sure you want to delete this entry?</h2>
+  <p>{{ entry.text|linebreaks }}</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+    <a href="{% url 'journal:topic' entry.topic.id %}">Cancel</a>
+  </form>
+{% endblock content %}

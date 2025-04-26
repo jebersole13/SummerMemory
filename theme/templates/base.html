@@ -14,8 +14,8 @@
 <body class="flex flex-col min-h-screen ">
   <div class="flex h-12 items-center space-x-11 bg-black text-white">   <nav class="w-full flex justify-between "> 
 
-        <a href="{% url 'journal:index' %}" class="" >Summer Memory</a> 
-<a href="{% url 'journal:topics' %}" class="">Memories</a>                 <p>
+        <a href="{% url 'journal:topics' %}" class="" >Summer Memory</a> 
+               <p>
 <div >
 {% if user.is_authenticated %}
 <p class="font-black" >Hello {{ user.username }}  </p>
