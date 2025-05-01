@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="max-w-lg mx-auto my-10 p-6 bg-white rounded-lg shadow-md">
-  <form action="{% url 'accounts:register' %}" method="post" class="space-y-4">
+  <form action="{% url 'accounts:register' %}" method="post" class="space-y-4 bg-white">
     <h1 class="text-3xl font-bold">Register</h1>
     {% csrf_token %}
     

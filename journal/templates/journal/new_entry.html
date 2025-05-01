@@ -1,12 +1,17 @@
 {% extends "base.html" %}
 
-
 {% block content %}
-<p><a href="{% url 'journal:topic' topic.id %}" class="border-8 bg-cyan-300">{{ topic }}</a></p>
-<p>Add new entry:</p>
+<div class="flex flex-col " >
+<p><a href="{% url 'journal:topic' topic.id %}" class="text-2xl font-bold m-3">{{ topic }}</a></p>
+<p class="text-xl font-bold m-2" >Add new entry</p>
 <form action="{% url 'journal:new_entry' topic.id %}" method='post'>
     {% csrf_token %}
     {{ form.as_div }}
     <button name="submit" class="bg-blue-600 text-white rounded" >Add entry</button>
 </form>
+</div>
+
 {% endblock content %}
+
+
+

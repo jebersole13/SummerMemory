@@ -11,10 +11,10 @@
     <form action="{% url 'accounts:login' %}" method="post" class="">
         {% csrf_token %}
 {{ form.as_p }}
-<button name="submit" class="bg-blue-500 text-white font-bold hover:bg-blue-700 px-4 py-2 rounded-md inline-block mt-2" >Log In</button>
+<button name="submit" class="bg-blue-500 text-white font-bold hover:bg-blue-700 p-2 m-2 rounded-md inline-block mt-2" >Log In</button>
 </form>
 <p>
-    <a href="{% url 'accounts:password_reset' %}" class="bg-blue-500 text-white hover:bg-blue-700 px-4 py-2 rounded-md inline-block mt-2">Forgot Password?</a>
+    <a href="{% url 'accounts:password_reset' %}"  class="p-3 text-blue-500 hover:text-blue-700 hover:underline">Forgot Password?</a>
 </p>
 
 </div>
