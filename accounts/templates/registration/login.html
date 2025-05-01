@@ -2,16 +2,21 @@
 
 
 {% block content %}
-
+<div class="max-w-lg mx-auto my-10 p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold">Login</h1>
+    <br>
 {% if forms.errors %}
     <p>Users and password bad! Try again, fool!</p>
 {% endif %}
     <form action="{% url 'accounts:login' %}" method="post" class="">
         {% csrf_token %}
-{{ form.as_div }}
-<button name="submit" class="bg-green-500 text-white font-bold rounded-md" >Log In</button>
+{{ form.as_p }}
+<button name="submit" class="bg-blue-500 text-white font-bold hover:bg-blue-700 px-4 py-2 rounded-md inline-block mt-2" >Log In</button>
 </form>
 <p>
     <a href="{% url 'accounts:password_reset' %}" class="bg-blue-500 text-white hover:bg-blue-700 px-4 py-2 rounded-md inline-block mt-2">Forgot Password?</a>
 </p>
+
+</div>
+
 {% endblock content %}

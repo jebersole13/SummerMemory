@@ -12,11 +12,11 @@
      
 
 <body class="flex flex-col min-h-screen ">
-  <div class="flex h-12 items-center space-x-11 bg-black text-white">   <nav class="w-full flex justify-between "> 
+  <div class="flex h-20 items-center space-x-11 bg-black text-white">   <nav class="w-full flex justify-between "> 
 
         <a href="{% url 'journal:topics' %}" class="" >Summer Memory</a> 
                <p>
-<div >
+<div class="pr-5">
 {% if user.is_authenticated %}
 <p class="font-black" >Hello {{ user.username }}  </p>
 {% else %}
@@ -27,7 +27,7 @@
     <hr/>
     <form action="{% url 'accounts:logout' %}" method="post">
         {% csrf_token %} 
-    <button type="submit" class=" bg-amber-50 text-blue-200 rounded-lg">Log out</button>
+    <button type="submit" class="text-white font-bold rounded-lg p-1 hover:bg-white hover:text-black  ">Log out</button>
     </form>
 {% endif %}
 </p>

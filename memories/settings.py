@@ -112,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LOGIN_REDIRECT_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'journal:topics'
 LOGOUT_REDIRECT_URL ='journal:index'
 LOGIN_URL = 'accounts:login'
 

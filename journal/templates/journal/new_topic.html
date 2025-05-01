@@ -2,13 +2,17 @@
 
 
 {% block content %}
+<div class="max-w-lg mx-auto my-10 p-4 bg-indigo-100 rounded-lg shadow-lg">
+<p class="text-3xl font-bold" >Add a new topic </p>
 
-<p>Add a new topic: </p>
-
+<br>
 <form action="{% url 'journal:new_topic' %}" method="post" >
     {% csrf_token %}
-    {{ form.as_div }}
-    <button name="submit" type="submit" class="bg-blue-400 text-white rounded-2xl">Add topic</button>
+    {{ form.as_p }}
+    <br>
+    <button name="submit" type="submit" class="bg-blue-500 p-2 text-white rounded-md">Add topic</button>
 </form>
+
+</div>
 
 {% endblock content %}

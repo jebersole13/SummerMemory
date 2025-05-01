@@ -1,5 +1,4 @@
 import time
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, login
 from django.contrib.sites.shortcuts import get_current_site
