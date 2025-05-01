@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
-from decouple import config, Csv
+from decouple import config
+from shutil import which
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,15 +27,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+
+ALLOWED_HOSTS = []
 TAILWIND_APP_NAME = 'theme'
-NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
+NPM_BIN_PATH = which("npm") or "/usr/bin/npm"
+
 
 # Application definition
 
 INSTALLED_APPS = [
+        'anymail',
     'accounts',
     'journal',
     'tailwind',
@@ -47,7 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE = ['whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
      "django_browser_reload.middleware.BrowserReloadMiddleware",
@@ -80,14 +86,12 @@ WSGI_APPLICATION = 'memories.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -108,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LOGIN_REDIRECT_URL = 'journal:topics'
+LOGIN_REDIRECT_URL = 'accounts:login'
 LOGOUT_REDIRECT_URL ='journal:index'
 LOGIN_URL = 'accounts:login'
 
@@ -127,7 +131,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+
 STATIC_URL = '/static/'
+
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 TAILWIND_CSS_PATH = 'css/dist/styles.css'
@@ -137,12 +143,10 @@ TAILWIND_CSS_PATH = 'css/dist/styles.css'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+ANYMAIL = {
+"MAILERSEND_API_TOKEN": config("API"),
+"MAILERSEND_SENDER_DOMAIN": "summermemory01.xyz",
+}
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER =  config('MAIL')
-EMAIL_HOST_PASSWORD = config('PASSWORD')
-DEFAULT_FROM_EMAIL = config('MAIL')
-EMAIL_SUBJECT_PREFIX = 'Password Recovery'
+EMAIL_BACKEND = "anymail.backends.mailersend.EmailBackend"
+DEFAULT_FROM_EMAIL ="noreply@summermemory01.xyz"

@@ -1,5 +1,5 @@
 import time
-import uuid
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, login
 from django.contrib.sites.shortcuts import get_current_site
@@ -42,9 +42,7 @@ def register(request):
             email = EmailMessage(
                 mail_subject,
                 message,
-                'memorysummer345@gmail.com', 
                 to=[form.cleaned_data["email"]],
-                 headers={'X-Entity-Ref-ID': str(uuid.uuid4())}
             )
             email.send(fail_silently=False)
             time.sleep(5)
