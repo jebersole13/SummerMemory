@@ -1,28 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="flex flex-col gap-10 m-4 p-4 border-2 w-full">
-<p> Topic:{{ topic.text }} </p>
-<p>Entries:</p>
-<p>
-    <a href="{% url 'journal:new_entry' topic.id %}">Add a new entry</a>
-</p>
-<ul>
-    
-    {% for entry in entries %}
-        <li>
-            <p> {{ entry.date_added|date:'M d, Y H:i' }} </p>
-            <p> {{ entry.text|linebreaks }} </p>
-            <p>
-                <a href="{% url 'journal:edit_entry' entry.id %}">Edit Entry</a>
-            </p>
-        </li>
-        {% empty %}
-        <li>Nothing here yo!</li>
-    {% endfor %}
-        
-</ul>
+<div class="w-full mx-auto mt-8 p-6 bg-white rounded shadow">
+  <h1 class="text-2xl font-bold mb-4">Topic: {{ topic.text }}</h1>
+  <p class="mb-6">
+    <a href="{% url 'journal:new_entry' topic.id %}"
+       class="text-blue-500 hover:text-blue-700">
+      + Add a new entry
+    </a>
+  </p>
 
+  {% for entry in entries %}
+    {# include the entry item, passing through entry & topic #}
+    {% include "journal/entry.html" %}
+  {% empty %}
+    <p class="text-gray-400 italic">No entries yet for this topic.</p>
+  {% endfor %}
 </div>
-
-
 {% endblock content %}

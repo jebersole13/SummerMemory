@@ -1,34 +1,28 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="flex flex-col gap-10 m-4 p-4 border-2 w-full">
-  <p>Topic: {{ topic.text }}</p>
-  <p>
-    <a href="{% url 'journal:new_entry' topic.id %}" class="text-blue-500 hover:text-blue-700">
-      Add a new entry
-    </a>
+{# journal/entry.html #}
+{# This file renders a single entry, with edit/delete controls #}
+
+<div class="p-4 border rounded mb-4">
+  <p class="text-gray-500 text-sm">
+    {{ entry.date_added|date:'M d, Y H:i' }}
   </p>
-  
-  <div class="p-4 border rounded">
-    <p class="text-gray-500 text-sm">{{ entry.date_added|date:'M d, Y H:i' }}</p>
-    <p class="my-2">{{ entry.text|linebreaks }}</p>
-    
-    {% if topic.owner == request.user %}
-      <div class="flex gap-4 mt-4">
-        <a href="{% url 'journal:edit_entry' entry.id %}" 
-           class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
-          Edit Entry
-        </a>
-        
-        <form action="{% url 'journal:delete_entry' entry.id %}" method="post">
-          {% csrf_token %}
-          <button type="submit" 
-                  class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
-                  onclick="return confirm('Are you sure? This cannot be undone.')">
-            Delete Entry
-          </button>
-        </form>
-      </div>
-    {% endif %}
+  <div class="my-2 text-gray-800">
+    {{ entry.text|linebreaks }}
   </div>
+
+  {% if topic.owner == request.user %}
+    <div class="flex gap-4 mt-4">
+      <a href="{% url 'journal:edit_entry' entry.id %}"
+         class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+        Edit Entry
+      </a>
+      <form action="{% url 'journal:delete_entry' entry.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit"
+                class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700"
+                onclick="return confirm('Are you sure? This cannot be undone.')">
+          Delete Entry
+        </button>
+      </form>
+    </div>
+  {% endif %}
 </div>
-{% endblock content %}

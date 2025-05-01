@@ -105,7 +105,7 @@ def delete_topic(request,topic_id):
     if request.method == 'POST':
         topic.delete()
         return redirect('journal:topics')
-    return render(request,'journal:delete_topic.html', {'topic':topic,  'warning': f"You're about to permanently delete topic from {topic.date_added}"})
+    return render(request,'journal/delete_topic.html', {'topic':topic,  'warning': f"You're about to permanently delete topic from {topic.date_added}"})
 
 @login_required
 def delete_entry(request, entry_id):
@@ -118,4 +118,4 @@ def delete_entry(request, entry_id):
     if request.method == 'POST':
         entry.delete()
         return redirect('journal:topic', topic_id=topic.id)
-    return render(request, 'journal:delete_entry.html', {'entry':entry, 'topic':topic,   'warning': f"You're about to permanently delete entry from {entry.date_added}"})
+    return render(request, 'journal/delete_entry.html', {'entry':entry, 'topic':topic,   'warning': f"You're about to permanently delete entry from {entry.date_added}"})
