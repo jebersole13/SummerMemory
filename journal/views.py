@@ -9,25 +9,14 @@ def index(request):
 
 @login_required
 def topics(request):
-    """_summary_
+   
 
-    Args:
-        request (_type_): _description_
-
-    Returns:
-        _type_: _description_
-    """
     topics = Topic.objects.filter(owner=request.user).order_by('date_added')
     context = {'topics':topics}
     return render(request, 'journal/topics.html',context)
 @login_required
 def topic(request, topic_id):
-    """_summary_
 
-    Args:
-        request (_type_): _description_
-        topic_id (_type_): _description_
-    """
     topic = get_object_or_404(Topic,id=topic_id)
     if topic.owner != request.user:
         raise  Http404
@@ -37,11 +26,7 @@ def topic(request, topic_id):
 
 @login_required
 def new_topic(request):
-    """
 
-    Args:
-        request (_type_): _description_
-    """
     if request.method != 'POST':
         #No data submitted; create a blank form.
         form = TopicForm()
@@ -57,12 +42,7 @@ def new_topic(request):
 
 @login_required
 def new_entry(request, topic_id):
-    """_summary_
 
-    Args:
-        request (_type_): _description_
-        topic_id (_type_): _description_
-    """
     topic = get_object_or_404(Topic,id=topic_id)
     if topic.owner != request.user:
         raise Http404
