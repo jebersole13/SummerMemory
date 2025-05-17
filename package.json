@@ -1,5 +1,5 @@
 {
-  "name": "summermemory01",
+  "name": "SummerMemory",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -7,13 +7,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jebersole13/summermemory01.git"
+    "url": "git+https://github.com/jebersole13/SummerMemory.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jebersole13/summermemory01/issues"
+    "url": "https://github.com/jebersole13/SummerMemory/issues"
   },
-  "homepage": "https://github.com/jebersole13/summermemory01#readme",
+  "homepage": "https://github.com/jebersole13/SummerMemory#readme",
   "description": ""
 }
