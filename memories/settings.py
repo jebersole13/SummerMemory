@@ -32,7 +32,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = False
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['yoururlhere.com']
 TAILWIND_APP_NAME = 'theme'
 NPM_BIN_PATH = which("npm") or "/usr/bin/npm"
 
