@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
-from decouple import config
+
 from shutil import which
+from decouple import config
+
 
 
 
@@ -145,8 +147,8 @@ TAILWIND_CSS_PATH = 'css/dist/styles.css'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ANYMAIL = {
 "MAILERSEND_API_TOKEN": config("API"),
-"MAILERSEND_SENDER_DOMAIN": "summermemory01.xyz",
+"MAILERSEND_SENDER_DOMAIN": "yourdomain.123",
 }
 
 EMAIL_BACKEND = "anymail.backends.mailersend.EmailBackend"
-DEFAULT_FROM_EMAIL ="noreply@summermemory01.xyz"
+DEFAULT_FROM_EMAIL ="noreply@yourdomain.123"
